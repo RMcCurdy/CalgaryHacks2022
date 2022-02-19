@@ -5,11 +5,8 @@ body {
     padding: 0;
     max-width: 100%;
     overflow-x: hidden;
-    font-family: 'Roboto';
-}
-
-body {
-    min-height: 100%;
+    overflow-y: hidden;
+    font-family: 'Mukta';
 }
 
 #page-container {
