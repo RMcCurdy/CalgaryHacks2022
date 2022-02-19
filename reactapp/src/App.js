@@ -1,12 +1,26 @@
 import './styles.css';
+import AppState from './context/AppState';
 
-import Maps from './maps/mapsTest';
+// Components
+import Maps from './maps/Maps';
+import Navbar from './Navbar';
+import PageNotFound from './components/PageNotFound';
+
+// Routes
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
     return (
-        <div>
-            <Maps />
-        </div>
+        <AppState>
+            <Router>
+                <Navbar />
+                <Routes>
+                    <Route path='/' exact element={<Maps />} />
+                    {/* <Route path='/page' exact element={<PageNotFound />} /> */}
+                    {/* <Route element={<PageNotFound />} /> */}
+                </Routes>
+            </Router>
+        </AppState>
     );
 }
 
