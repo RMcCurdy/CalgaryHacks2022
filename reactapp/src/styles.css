@@ -1,0 +1,13 @@
+/* This ensures there are no margins added by default */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+    font-family: 'Roboto';
+}
+
+body {
+    min-height: 100%;
+}
