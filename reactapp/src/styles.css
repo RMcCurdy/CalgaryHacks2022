@@ -15,7 +15,8 @@ body {
 }
 
 :root {
-    --background-green: rgb(187, 237, 181);
+    --background-green: #c2f0c2;
+    --icon-green: #47d147;
 }
 
 /* Fonts */
@@ -40,6 +41,18 @@ body {
     cursor: pointer;
 }
 
+.navbar-link-color-animation {
+    transition: color 0.3s;
+    -webkit-transition: color 0.3s;
+    -moz-transition: color 0.3s;
+    -o-transition: color 0.3s;
+    -ms-transition: color 0.3s;
+}
+
+.navbar-link-color-animation:hover {
+    color: var(--icon-green);
+}
+
 .navbar-container {
     display: flex;
     justify-content: space-around;
@@ -51,11 +64,18 @@ body {
     width: 100vw;
     height: 48px;
     background-color: #fff;
-    border-bottom: 1px solid black;
+    box-shadow: 0 10px 100px rgb(0 0 0 / 15%);
+}
+
+.navbar-icon {
+    max-height: 32px;
 }
 
 .page-container {
     background-color: var(--background-green);
     min-height: 100vh;
     padding-top: 48px;
+}
+
+.button {
 }

@@ -18,8 +18,8 @@ function App() {
                 <div id='page-container'>
                     <Routes>
                         <Route path='/' exact element={<RoutePlanner />} />
-                        <Route path='/envcalc' exact element={<EnvCalculator />} />
-                        <Route path='/howitworks' exact element={<HowItWorks />} />
+                        <Route path='/calculate' exact element={<EnvCalculator />} />
+                        <Route path='/about' exact element={<HowItWorks />} />
                     </Routes>
                 </div>
             </Router>
