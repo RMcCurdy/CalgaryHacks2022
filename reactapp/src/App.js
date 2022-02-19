@@ -3,7 +3,7 @@ import AppState from './context/AppState';
 
 // Components
 import Navbar from './Navbar';
-import Maps from './maps/Maps';
+import RoutePlanner from './components/routePlanner/RoutePlanner';
 import EnvCalculator from './components/calc/EnvCalculator';
 import HowItWorks from './components/howitworks/HowItWorks';
 
@@ -15,11 +15,13 @@ function App() {
         <AppState>
             <Router>
                 <Navbar />
-                <Routes>
-                    <Route path='/' exact element={<Maps />} />
-                    <Route path='/envcalc' exact element={<EnvCalculator />} />
-                    <Route path='/howitworks' exact element={<HowItWorks />} />
-                </Routes>
+                <div id='page-container'>
+                    <Routes>
+                        <Route path='/' exact element={<RoutePlanner />} />
+                        <Route path='/envcalc' exact element={<EnvCalculator />} />
+                        <Route path='/howitworks' exact element={<HowItWorks />} />
+                    </Routes>
+                </div>
             </Router>
         </AppState>
     );

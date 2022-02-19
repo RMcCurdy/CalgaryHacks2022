@@ -5,11 +5,17 @@ body {
     padding: 0;
     max-width: 100%;
     overflow-x: hidden;
-    font-family: 'Roboto';
+    overflow-y: hidden;
+    font-family: 'Mukta';
 }
 
-body {
-    min-height: 100%;
+#page-container {
+    position: relative;
+    min-height: 100vh;
+}
+
+:root {
+    --background-green: rgb(187, 237, 181);
 }
 
 /* Fonts */
@@ -28,4 +34,28 @@ body {
 @font-face {
     font-family: 'Mukta';
     src: url('./fonts/Mukta-Regular.ttf') format('truetype');
+}
+
+.navbar-link:hover {
+    cursor: pointer;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    z-index: 2;
+    top: 0%;
+    left: 0%;
+    width: 100vw;
+    height: 48px;
+    background-color: #fff;
+    border-bottom: 1px solid black;
+}
+
+.page-container {
+    background-color: var(--background-green);
+    min-height: 100vh;
+    padding-top: 48px;
 }
