@@ -13,6 +13,8 @@ function Paths() {
             <Switch>
                 {/* After updating the history, this will determine which path and page to load */}
                 <Route path='/' exact component={Maps} />
+                <Route path='/' exact component={Maps} />
+                <Route path='/' exact component={Maps} />
 
                 {/* If none of the paths above match, show the page not found */}
                 <Route component={PageNotFound} />

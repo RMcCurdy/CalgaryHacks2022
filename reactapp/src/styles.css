@@ -11,3 +11,21 @@ body {
 body {
     min-height: 100%;
 }
+
+/* Fonts */
+@font-face {
+    font-family: 'Mukta-EL';
+    src: url('./fonts/Mukta-ExtraLight.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Mukta-L';
+    src: url('./fonts/Mukta-Light.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Mukta-M';
+    src: url('./fonts/Mukta-Medium.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Mukta';
+    src: url('./fonts/Mukta-Regular.ttf') format('truetype');
+}
