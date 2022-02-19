@@ -7,22 +7,25 @@ const Navbar = () => {
         navigate(route);
     };
     return (
-        <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', minHeight: '48px' }}>
+        <div className='navbar-container'>
             <div style={{ fontFamily: 'Mukta-M', fontSize: '1.5rem' }}>EcoMaps</div>
-            <div style={{ display: 'flex', gap: '1rem', fontFamily: 'Mukta', fontSize: '1.25rem' }}>
+            <div style={{ display: 'flex', gap: '2rem', fontFamily: 'Mukta', fontSize: '1.25rem' }}>
                 <div
+                    className='navbar-link'
                     onClick={() => {
                         handleNavbarClick('/');
                     }}>
                     Route Planner
                 </div>
                 <div
+                    className='navbar-link'
                     onClick={() => {
                         handleNavbarClick('/envcalc');
                     }}>
                     Environment Calculator
                 </div>
                 <div
+                    className='navbar-link'
                     onClick={() => {
                         handleNavbarClick('/howitworks');
                     }}>
