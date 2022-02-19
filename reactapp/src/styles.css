@@ -56,3 +56,9 @@ body {
     background-color: #fff;
     border-bottom: 1px solid black;
 }
+
+.page-container {
+    background-color: var(--background-green);
+    min-height: 100vh;
+    padding-top: 48px;
+}

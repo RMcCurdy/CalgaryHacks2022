@@ -1,7 +1,7 @@
 import React from 'react';
 
 const HowItWorks = () => {
-    return <div style={{ backgroundColor: 'var(--background-green)', minHeight: '100vh' }}>HowItWorks</div>;
+    return <div className='page-container'>HowItWorks</div>;
 };
 
 export default HowItWorks;

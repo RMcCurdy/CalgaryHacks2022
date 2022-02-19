@@ -1,7 +1,7 @@
 import React from 'react';
 
 const RoutePlanner = () => {
-    return <div style={{ backgroundColor: 'var(--background-green)', minHeight: '100vh' }}>RoutePlanner</div>;
+    return <div className='page-container'>RoutePlanner</div>;
 };
 
 export default RoutePlanner;

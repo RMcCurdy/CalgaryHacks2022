@@ -1,7 +1,7 @@
 import React from 'react';
 
 const EnvCalculator = () => {
-    return <div style={{ backgroundColor: 'var(--background-green)', minHeight: '100vh' }}>EnvCalculator</div>;
+    return <div className='page-container'>EnvCalculator</div>;
 };
 
 export default EnvCalculator;

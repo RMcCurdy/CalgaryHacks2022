@@ -15,8 +15,6 @@ function App() {
         <AppState>
             <Router>
                 <Navbar />
-                {/* This div is needed to add a height to the fixed Navbar above */}
-                <div style={{ height: '48px' }} />
                 <div id='page-container'>
                     <Routes>
                         <Route path='/' exact element={<RoutePlanner />} />
