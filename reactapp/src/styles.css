@@ -36,6 +36,14 @@ body {
     font-family: 'Mukta';
     src: url('./fonts/Mukta-Regular.ttf') format('truetype');
 }
+@font-face {
+    font-family: 'Script';
+    src: url('./fonts/GreatVibes-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Header';
+    src: url('./fonts/Bitter-Bold.ttf') format('truetype');
+}
 
 .navbar-link:hover {
     cursor: pointer;
@@ -53,6 +61,16 @@ body {
     color: var(--icon-green);
 }
 
+.navbar-link-current {
+    /* text-decoration: underline; */
+    /* border-bottom: 2px solid var(--icon-green); */
+    color: var(--icon-green);
+}
+
+.navbar-link-current:hover {
+    cursor: pointer;
+}
+
 .navbar-container {
     display: flex;
     justify-content: space-around;
@@ -63,7 +81,7 @@ body {
     left: 0%;
     width: 100vw;
     height: 48px;
-    background-color: #fff;
+    background-color: #fefefe;
     box-shadow: 0 10px 100px rgb(0 0 0 / 15%);
 }
 
@@ -75,6 +93,49 @@ body {
     background-color: var(--background-green);
     min-height: 100vh;
     padding-top: 48px;
+}
+
+.about-semi-header {
+    margin: 2rem 0 -1.5rem 0;
+    font-family: 'Script';
+    font-size: 1.75rem;
+    font-weight: 500;
+}
+
+.about-header {
+    font-family: 'Header';
+    font-size: 6rem;
+    text-shadow: -3px 4px 2px #a3cca3;
+    margin-top: 0rem;
+}
+
+.about-header-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.content-card-container {
+    display: flex;
+    gap: 2rem;
+    padding: 0 20rem;
+}
+
+.card-container {
+    background-color: #fefefe;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: -3px 4px 2px #a3cca3;
+}
+
+.content-header {
+    font-family: 'Mukta-M';
+    font-size: 1.75rem;
+}
+
+.content-descriptor {
+    font-family: 'Mukta-L';
+    font-size: 1.25rem;
 }
 
 .button {

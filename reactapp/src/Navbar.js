@@ -1,8 +1,10 @@
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import LeafIcon from './images/leaf-icon.png';
 
 const Navbar = () => {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleNavbarClick = (route) => {
         navigate(route);
@@ -20,21 +22,21 @@ const Navbar = () => {
             </div>
             <div style={{ display: 'flex', gap: '2rem', fontFamily: 'Mukta', fontSize: '1.25rem' }}>
                 <div
-                    className='navbar-link navbar-link-color-animation'
+                    className={location.pathname === '/' ? 'navbar-link-current' : 'navbar-link navbar-link-color-animation'}
                     onClick={() => {
                         handleNavbarClick('/');
                     }}>
                     Route Planner
                 </div>
                 <div
-                    className='navbar-link navbar-link-color-animation'
+                    className={location.pathname === '/calculate' ? 'navbar-link-current' : 'navbar-link navbar-link-color-animation'}
                     onClick={() => {
                         handleNavbarClick('/calculate');
                     }}>
                     EcoCalculator
                 </div>
                 <div
-                    className='navbar-link navbar-link-color-animation'
+                    className={location.pathname === '/about' ? 'navbar-link-current' : 'navbar-link navbar-link-color-animation'}
                     onClick={() => {
                         handleNavbarClick('/about');
                     }}>
