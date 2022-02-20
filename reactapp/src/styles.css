@@ -13,6 +13,10 @@ body {
     min-height: 100vh;
 }
 
+body {
+    background-color: var(--background-green);
+}
+
 :root {
     --background-green: #c2f0c2;
     --icon-green: #47d147;
@@ -107,6 +111,7 @@ body {
     font-size: 6rem;
     text-shadow: -3px 4px 2px #a3cca3;
     margin-top: 0rem;
+    margin-bottom: 1rem;
 }
 
 .calculate-header {
@@ -124,9 +129,12 @@ body {
 }
 
 .content-card-container {
-
     gap: 2rem;
     padding: 0 20rem;
+}
+
+.content-card-container > * {
+    margin: 4rem 0;
 }
 
 .card-container {
@@ -154,25 +162,31 @@ body {
     font-family: 'Mukta-M';
     font-size: 1.75rem;
 }
-.content-header-reverse {
+
+.about-semi-semi-header {
     font-family: 'Mukta-M';
     font-size: 1.75rem;
-    text-align: right;
+    padding: 0 2rem;
+    margin-bottom: 0.5rem;
+    margin-top: 0;
 }
 
-.content-img{
-
+.content-img {
 }
 
-.content-img-reverse{
-
+.content-img-reverse {
     text-align: right;
-
 }
 
 .content-descriptor {
     font-family: 'Mukta-L';
     font-size: 1.25rem;
+}
+
+.about-descriptor {
+    font-family: 'Mukta-L';
+    font-size: 1.25rem;
+    padding: 0 2rem;
 }
 
 .doughnut-container {
@@ -391,7 +405,7 @@ body {
 .fade-out {
     animation: fadeOut 1s;
     opacity: 0;
-    display: flex;
+    display: block;
 }
 
 @keyframes fadeOut {
@@ -402,4 +416,8 @@ body {
         opacity: 0;
         display: none;
     }
+}
+
+.about-image {
+    width: 10vw;
 }
