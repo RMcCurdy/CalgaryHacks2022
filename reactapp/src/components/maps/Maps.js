@@ -71,21 +71,10 @@ Geocode.fromLatLng('48.8583701', '2.2922926').then(
 );*/
 
 
-function getLatLongFromString(str) {
-    Geocode.fromAddress('10 Brentwood Common NW').then(
-    (response) => {
-        const { lat, lng } = response.results[0].geometry.location;
-       return {lat, lng};
-    },
-    (error) => {
-        return error;
-    },
-);         // Function returns the product of a and b
-}
-/*
+
 //DESTINATION
 // Get latitude & longitude from address.
-Geocode.fromAddress('10 Brentwood Common NW').then(
+/*Geocode.fromAddress('10 Brentwood Common NW').then(
     (response) => {
         const { lat, lng } = response.results[0].geometry.location;
         console.log(lat, lng);
@@ -105,26 +94,55 @@ Geocode.fromAddress('10 Brentwood Common NW').then(
     (error) => {
         console.error(error);
     },
-);*/
+);
+*/
 
-let test = getLatLongFromString('10 Brentwood Common NW');
-console.log(test);
+
 
 const Maps = () => {
     const [origin, setOrigin] = useState("");
     const [destination, setDestination] = useState("");
-     
+    //const [origin_latlong, setOriginlatLong] = useState(null);
+    //const [destination_latLong, setDestinationlatLong] = useState(null);
+
+
+    const getLatLongFromString = (str) =>{
+        Geocode.fromAddress(str).then(
+        (response) => {
+            const { lat, lng } = response.results[0].geometry.location;
+         return [lat, lng];
+        },
+        (error) => {
+            return error;
+        },
+        );         // Function returns the product of a and b
+    }
+
+    //console.log( getLatLongFromString(origin) ); 
+
+
+
     const submitLocations = () => {
-   
-    const LatLong = {
+        const dest = getLatLongFromString(destination);
+        const orig = getLatLongFromString(origin);
+        console.log(dest);
+        console.log(orig);
+
+       // setDestinationlatLong(dest);
+       // setOriginlatLong(getLatLongFromString(origin));
+       // console.log(destination_latLong);
+
+    /*let LatLong = {
       Lat_Or: getLatLongFromString(origin)[0],
      Long_Or: getLatLongFromString(origin)[1],
      Lat_Des: getLatLongFromString(destination)[0],
      Long_Des: getLatLongFromString(destination)[1],
-    }
+    }*/
 
-   let url = 'https://maps.googleapis.com/maps/api/distancematrix/json?destinations='+LatLong.Lat_Des+'%2C+ LatLong.Long_Des'+'&origins='+LatLong.Lat_Or+'%2C'+LatLong.Long_Or+'&key=AIzaSyDGPo8L_ttBczo_2qxf3s9NStUhJUXUvFc';
-   console.log(url);
+
+
+  // let url = 'https://maps.googleapis.com/maps/api/distancematrix/json?destinations='+LatLong.Lat_Des+'%2C+ LatLong.Long_Des'+'&origins='+LatLong.Lat_Or+'%2C'+LatLong.Long_Or+'&key=AIzaSyDGPo8L_ttBczo_2qxf3s9NStUhJUXUvFc';
+   //console.log(url);
     //console.log(LatLong);
     //history.push();
   }
