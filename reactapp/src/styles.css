@@ -5,7 +5,6 @@ body {
     padding: 0;
     max-width: 100%;
     overflow-x: hidden;
-    overflow-y: hidden;
     font-family: 'Mukta';
 }
 
@@ -187,6 +186,12 @@ body {
     font-size: 1.25rem;
 }
 
+.route-map-descriptor {
+    text-align: center;
+    padding: 0 20rem;
+    font-size: 1.25rem;
+}
+
 .input-container {
     display: flex;
     flex-direction: column;
@@ -228,6 +233,7 @@ body {
     transition: background-color 0.2s ease-in-out;
     border-radius: 5px;
     margin: 0 auto;
+    color: var(--darker-white);
 }
 
 .input-button:hover {
@@ -308,4 +314,8 @@ body {
     100% {
         transform: translate(110vw, -20vh) rotate(920deg);
     }
+}
+
+.transportation-icon {
+    width: 10vw;
 }

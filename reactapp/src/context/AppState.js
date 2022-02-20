@@ -7,6 +7,11 @@ const AppState = (props) => {
     const [walkingStats, setWalkingStats] = useState(0);
     const [originLat, setOriginLat] = useState(0);
     const [originLong, setOriginLong] = useState(0);
+    const [destinationLat, setDestinationLat] = useState(0);
+    const [destinationLong, setDestinationLong] = useState(0);
+
+    const [originName, setOriginName] = useState('');
+    const [destinationName, setDestinationName] = useState('');
 
     return (
         <AppContext.Provider
@@ -21,6 +26,14 @@ const AppState = (props) => {
                 setOriginLat,
                 originLong,
                 setOriginLong,
+                destinationLat,
+                setDestinationLat,
+                destinationLong,
+                setDestinationLong,
+                originName,
+                setOriginName,
+                destinationName,
+                setDestinationName,
             }}>
             {props.children}
         </AppContext.Provider>

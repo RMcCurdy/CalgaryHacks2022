@@ -4,6 +4,12 @@ import AppContext from '../../context/AppContext';
 
 import GoogleMapsMap from './GoogleMapsMap';
 
+import Car from '../../images/car.png';
+import SUV from '../../images/suv.png';
+import Truck from '../../images/truck.png';
+import Bus from '../../images/bus.png';
+import Walk from '../../images/walk.png';
+
 import Geocode from 'react-geocode';
 
 Geocode.setApiKey('AIzaSyDGPo8L_ttBczo_2qxf3s9NStUhJUXUvFc');
@@ -14,20 +20,25 @@ Geocode.enableDebug();
 const Maps = () => {
     const [origin, setOrigin] = useState('');
     const [destination, setDestination] = useState('');
+
     const [originLatLong, setOriginLatLong] = useState(null);
     const [destinationLatLong, setDestinationLatLong] = useState(null);
 
     const [showConfirmMap, setShowConfirmMap] = useState(false);
+    const [showFullOutput, setShowFullOutput] = useState(false);
 
-    const { setTransitStats, setDrivingStats, setWalkingStats, setOriginLat, setOriginLong, originLat, originLong } = useContext(AppContext);
+    const { setTransitStats, setDrivingStats, setWalkingStats, setOriginLat, setOriginLong, setDestinationLat, setDestinationLong, setOriginName, setDestinationName } =
+        useContext(AppContext);
 
     const originChange = (val) => {
         setOrigin(val);
+        setOriginName(val);
         console.log('New origin val: ', val);
     };
 
     const destinationChange = (val) => {
         setDestination(val);
+        setDestinationName(val);
         console.log('New destination val: ', val);
     };
 
@@ -36,7 +47,7 @@ const Maps = () => {
         fetchOriginGeocode();
         setTimeout(() => {
             setShowConfirmMap(true);
-        }, 1000);
+        }, 2000);
     };
 
     const fetchOriginGeocode = () => {
@@ -59,6 +70,8 @@ const Maps = () => {
             (response) => {
                 const { lat, lng } = response.results[0].geometry.location;
                 setDestinationLatLong([lat.toString(), lng.toString()]);
+                setDestinationLat(lat);
+                setDestinationLong(lng);
                 return [lat.toString(), lng.toString()];
             },
             (error) => {
@@ -80,6 +93,9 @@ const Maps = () => {
         walkingSubmit(
             `https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?origins=${originLatLong[0]},${originLatLong[1]}&destinations=${destinationLatLong[0]},${destinationLatLong[1]}&travelMode=walking&key=AgY8Tz1I-3e1GUD0ylU5dDBT6-xG9k3SqreJGYxdmliZeCXFhLSgd29LUezMYRLs`,
         );
+        setTimeout(() => {
+            setShowFullOutput(true);
+        }, 2000);
     };
 
     const transitSubmit = (url) => {
@@ -118,27 +134,59 @@ const Maps = () => {
                 </div>
                 {showConfirmMap ? (
                     <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', margin: '0 auto' }}>
-                        <GoogleMapsMap />
-                        <div style={{ marginTop: '2rem' }}>
-                            <button
-                                style={{ margin: '0 1rem' }}
-                                className='input-button'
-                                type='button'
-                                onClick={() => {
-                                    setShowConfirmMap(false);
-                                }}>
-                                Back
-                            </button>
-                            <button
-                                style={{ margin: '0 1rem' }}
-                                className='input-button'
-                                type='button'
-                                onClick={() => {
-                                    handleSubmit();
-                                }}>
-                                Find Routes
-                            </button>
-                        </div>
+                        {showFullOutput ? (
+                            <>
+                                <div style={{ border: '2px solid var(--icon-green)' }}>
+                                    <GoogleMapsMap />
+                                </div>
+                                <div>
+                                    <img className='transportation-icon' src={Car} alt='car' />
+                                </div>
+                                <div>
+                                    <img className='transportation-icon' src={Bus} alt='car' />
+                                </div>
+                                <div>
+                                    <img className='transportation-icon' src={Walk} alt='car' />
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <div className='route-descriptor' style={{ fontSize: '1.5rem' }}>
+                                    Are these your intended locations?
+                                </div>
+                                <div style={{ border: '2px solid var(--icon-green)' }}>
+                                    <GoogleMapsMap />
+                                </div>
+                                <div style={{ margin: '2rem 0 1rem 0' }}>
+                                    <div className='route-map-descriptor'>
+                                        Click <span style={{ fontFamily: 'Mukta-M' }}>Find Routes</span> to view your most eco-friendly journey!
+                                    </div>
+                                    <div className='route-map-descriptor' style={{ marginTop: '-0.5rem' }}>
+                                        or go <span style={{ fontFamily: 'Mukta-M' }}>Back</span> to to change your locations.
+                                    </div>
+                                </div>
+                                <div style={{ margin: '0.5rem 0 3rem' }}>
+                                    <button
+                                        style={{ margin: '0 1rem' }}
+                                        className='input-button'
+                                        type='button'
+                                        onClick={() => {
+                                            setShowConfirmMap(false);
+                                        }}>
+                                        Back
+                                    </button>
+                                    <button
+                                        style={{ margin: '0 1rem' }}
+                                        className='input-button'
+                                        type='button'
+                                        onClick={() => {
+                                            handleSubmit();
+                                        }}>
+                                        Find Routes
+                                    </button>
+                                </div>
+                            </>
+                        )}
                     </div>
                 ) : (
                     <>
