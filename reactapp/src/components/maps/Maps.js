@@ -1,216 +1,137 @@
-// https://maps.googleapis.com/maps/api/distancematrix/json?destinations=41.6655101%2C-72.89188969999998&origins=40.6655101%2C-73.89188969999998&key=AIzaSyDGPo8L_ttBczo_2qxf3s9NStUhJUXUvFc
 import React from 'react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import AppContext from '../../context/AppContext';
 
 import Geocode from 'react-geocode';
 
-// set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
 Geocode.setApiKey('AIzaSyDGPo8L_ttBczo_2qxf3s9NStUhJUXUvFc');
-
-// set response language. Defaults to english.
 Geocode.setLanguage('en');
-
-// set response region. Its optional.
-// A Geocoding request with region=es (Spain) will return the Spanish city.
-//Geocode.setRegion('es');
-
-// set location_type filter . Its optional.
-// google geocoder returns more that one address for given lat/lng.
-// In some case we need one address as response for which google itself provides a location_type filter.
-// So we can easily parse the result for fetching address components
-// ROOFTOP, RANGE_INTERPOLATED, GEOMETRIC_CENTER, APPROXIMATE are the accepted values.
-// And according to the below google docs in description, ROOFTOP param returns the most accurate result.
 Geocode.setLocationType('ROOFTOP');
-
-// Enable or disable logs. Its optional.
 Geocode.enableDebug();
-/*
-// Get address from latitude & longitude.
-Geocode.fromLatLng('48.8583701', '2.2922926').then(
-    (response) => {
-        const address = response.results[0].formatted_address;
-        console.log(address);
-    },
-    (error) => {
-        console.error(error);
-    },
-);
-
-// Get formatted address, city, state, country from latitude & longitude when
-// Geocode.setLocationType("ROOFTOP") enabled
-// the below parser will work for most of the countries
-Geocode.fromLatLng('48.8583701', '2.2922926').then(
-    (response) => {
-        const address = response.results[0].formatted_address;
-        let city, state, country;
-        for (let i = 0; i < response.results[0].address_components.length; i++) {
-            for (let j = 0; j < response.results[0].address_components[i].types.length; j++) {
-                switch (response.results[0].address_components[i].types[j]) {
-                    case 'locality':
-                        city = response.results[0].address_components[i].long_name;
-                        break;
-                    case 'administrative_area_level_1':
-                        state = response.results[0].address_components[i].long_name;
-                        break;
-                    case 'country':
-                        country = response.results[0].address_components[i].long_name;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-        console.log(city, state, country);
-        console.log(address);
-    },
-    (error) => {
-        console.error(error);
-    },
-);*/
-
-//DESTINATION
-// Get latitude & longitude from address.
-/*Geocode.fromAddress('10 Brentwood Common NW').then(
-    (response) => {
-        const { lat, lng } = response.results[0].geometry.location;
-        console.log(lat, lng);
-    },
-    (error) => {
-        console.error(error);
-    },
-);
-
-//ORIGIN
-// Get latitude & longitude from address.
-Geocode.fromAddress('10 Brentwood Common NW').then(
-    (response) => {
-        const { lat, lng } = response.results[0].geometry.location;
-        console.log(lat, lng);
-    },
-    (error) => {
-        console.error(error);
-    },
-);
-*/
 
 const Maps = () => {
-    const [origin, setOrigin] = useState('10 Brentwood Common NW');
-    const [destination, setDestination] = useState('University of Calgary');
-    // const [originLatLong, setOriginLatLong] = useState(null);
-    // const [destinationLatLong, setDestinationLatLong] = useState(null);
+    const [origin, setOrigin] = useState('');
+    const [destination, setDestination] = useState('');
+    const [originLatLong, setOriginLatLong] = useState(null);
+    const [destinationLatLong, setDestinationLatLong] = useState(null);
+
+    const { setTransitStats, setDrivingStats, setWalkingStats } = useContext(AppContext);
 
     const originChange = (val) => {
         setOrigin(val);
+        console.log('New origin val: ', val);
     };
 
     const destinationChange = (val) => {
         setDestination(val);
+        console.log('New destination val: ', val);
     };
 
-    const submitLocations = () => {
-        const geocodeOrigin = async () => {
-            await Geocode.fromAddress(origin).then(
-                (response) => {
-                    const { lat, lng } = response.results[0].geometry.location;
-                    return [lat.toString(), lng.toString()];
-                },
-                (error) => {
-                    return error;
-                },
-            );
-        };
+    const handleLocation = () => {
+        fetchDestinationGeocode();
+        fetchOriginGeocode();
+    };
 
-        const geocodeDestination = async () => {
-            await Geocode.fromAddress(destination).then(
-                (response) => {
-                    const { lat, lng } = response.results[0].geometry.location;
-                    return [lat.toString(), lng.toString()];
-                },
-                (error) => {
-                    return error;
-                },
-            );
-        };
+    const fetchOriginGeocode = () => {
+        Geocode.fromAddress(origin).then(
+            (response) => {
+                const { lat, lng } = response.results[0].geometry.location;
+                setOriginLatLong([lat.toString(), lng.toString()]);
+                return [lat.toString(), lng.toString()];
+            },
+            (error) => {
+                console.log(error);
+            },
+        );
+    };
 
-        let originLatLong = geocodeOrigin();
-        let destinationLatLong = geocodeDestination();
+    const fetchDestinationGeocode = () => {
+        Geocode.fromAddress(destination).then(
+            (response) => {
+                const { lat, lng } = response.results[0].geometry.location;
+                setDestinationLatLong([lat.toString(), lng.toString()]);
+                return [lat.toString(), lng.toString()];
+            },
+            (error) => {
+                console.log(error);
+            },
+        );
+    };
 
-        const url = `https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?origins=${originLatLong[0]},${originLatLong[1]}&destinations=${destinationLatLong[0]},${destinationLatLong[1]}&travelMode=driving&key=AgY8Tz1I-3e1GUD0ylU5dDBT6-xG9k3SqreJGYxdmliZeCXFhLSgd29LUezMYRLs`;
-        // const url = `https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?origins=51.043500,-114.070430&destinations=51.086970,-114.128290&travelMode=transit&key=AgY8Tz1I-3e1GUD0ylU5dDBT6-xG9k3SqreJGYxdmliZeCXFhLSgd29LUezMYRLs`;
+    const handleSubmit = () => {
+        // const originLat = await Promise.all([fetchOriginGeocode]);
+        // const destLat = await Promise.all([fetchDestinationGeocode]);
 
+        transitSubmit(
+            `https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?origins=${originLatLong[0]},${originLatLong[1]}&destinations=${destinationLatLong[0]},${destinationLatLong[1]}&travelMode=transit&key=AgY8Tz1I-3e1GUD0ylU5dDBT6-xG9k3SqreJGYxdmliZeCXFhLSgd29LUezMYRLs`,
+        );
+        drivingSubmit(
+            `https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?origins=${originLatLong[0]},${originLatLong[1]}&destinations=${destinationLatLong[0]},${destinationLatLong[1]}&travelMode=driving&key=AgY8Tz1I-3e1GUD0ylU5dDBT6-xG9k3SqreJGYxdmliZeCXFhLSgd29LUezMYRLs`,
+        );
+        walkingSubmit(
+            `https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?origins=${originLatLong[0]},${originLatLong[1]}&destinations=${destinationLatLong[0]},${destinationLatLong[1]}&travelMode=walking&key=AgY8Tz1I-3e1GUD0ylU5dDBT6-xG9k3SqreJGYxdmliZeCXFhLSgd29LUezMYRLs`,
+        );
+    };
+
+    const transitSubmit = (url) => {
         fetch(url)
             .then((response) => response.json())
-            .then((data) => console.log('Data from fetch: ', data))
+            .then((data) => setTransitStats(data.resourceSets[0].resources[0].results[0]))
             .catch((error) => {
                 console.error('There was an error!', error);
             });
+    };
 
-        // const res = await fetch(
-        //     'https://maps.googleapis.com/maps/api/distancematrix/json?destinations=' +
-        //         destinationLatLong[0] +
-        //         '%2C' +
-        //         destinationLatLong[1] +
-        //         '&origins=' +
-        //         originLatLong[0] +
-        //         '%2C' +
-        //         originLatLong[1] +
-        //         '&key=AIzaSyDGPo8L_ttBczo_2qxf3s9NStUhJUXUvFc',
-        //     {
-        //         mode: 'cors',
-        //         headers: {
-        //             'Access-Control-Allow-Origin': '*',
-        //             'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-        //             'Content-Type': 'application/json',
-        //         },
-        //     },
-        // );
-        // console.log(res);
-        // const data = await res.json();
-        // if (data.message !== undefined) {
-        //     console.log('ERROR');
-        // } else {
-        //     console.log(data);
-        // }
+    const drivingSubmit = (url) => {
+        fetch(url)
+            .then((response) => response.json())
+            .then((data) => setDrivingStats(data.resourceSets[0].resources[0].results[0]))
+            .catch((error) => {
+                console.error('There was an error!', error);
+            });
+    };
 
-        // fetch(
-        //     'https://maps.googleapis.com/maps/api/distancematrix/json?destinations=' +
-        //         destinationLatLong[0] +
-        //         '%2C' +
-        //         destinationLatLong[1] +
-        //         '&origins=' +
-        //         originLatLong[0] +
-        //         '%2C' +
-        //         originLatLong[1] +
-        //         '&key=AIzaSyDGPo8L_ttBczo_2qxf3s9NStUhJUXUvFc',
-        // )
-        //     .then(async (response) => {
-        //         const data = await response.json();
-
-        //         // check for error response
-        //         if (!response.ok) {
-        //             // get error message from body or default to response statusText
-        //             const error = (data && data.message) || response.statusText;
-        //             return Promise.reject(error);
-        //         }
-
-        //         console.log(data);
-        //     })
-        //     .catch((error) => {
-        //         console.error('There was an error!', error);
-        //     });
-
-        // let url = 'https://maps.googleapis.com/maps/api/distancematrix/json?destinations='+LatLong.Lat_Des+'%2C+ LatLong.Long_Des'+'&origins='+LatLong.Lat_Or+'%2C'+LatLong.Long_Or+'&key=AIzaSyDGPo8L_ttBczo_2qxf3s9NStUhJUXUvFc';
-        //console.log(url);
-        //console.log(LatLong);
-        //history.push();
+    const walkingSubmit = (url) => {
+        fetch(url)
+            .then((response) => response.json())
+            .then((data) => setWalkingStats(data.resourceSets[0].resources[0].results[0]))
+            .catch((error) => {
+                console.error('There was an error!', error);
+            });
     };
 
     return (
         <>
-            <input value={origin} onChange={(e) => originChange(e.target.value)} placeholder='origin' type='text' name='origin' required />
-            <input value={destination} onChange={(e) => destinationChange(e.target.value)} placeholder='destination' type='text' name='destination' required />
+            <div className='input-container'>
+                <div className='textfield-container'>
+                    <input className='textfield' value={origin} onChange={(e) => originChange(e.target.value)} placeholder='Start Location' type='text' name='origin' />
+                    <input
+                        className='textfield'
+                        value={destination}
+                        onChange={(e) => destinationChange(e.target.value)}
+                        placeholder='End Location'
+                        type='text'
+                        name='destination'
+                    />
+                </div>
 
-            <button type='button' onClick={submitLocations}>
+                <button
+                    className='input-button'
+                    type='button'
+                    disabled={origin === '' || destination === '' ? true : false}
+                    style={{ backgroundColor: origin === '' || destination === '' ? 'gray' : 'var(--icon-green)' }}
+                    onClick={() => {
+                        handleLocation();
+                    }}>
+                    Search
+                </button>
+            </div>
+            <button
+                className='input-button'
+                type='button'
+                onClick={() => {
+                    handleSubmit();
+                }}>
                 Submit
             </button>
         </>

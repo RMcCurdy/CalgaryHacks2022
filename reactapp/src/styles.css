@@ -110,6 +110,14 @@ body {
     margin-top: 0rem;
 }
 
+.calculate-header {
+    font-family: 'Header';
+    font-size: 6rem;
+    text-shadow: -3px 4px 2px #a3cca3;
+    margin-top: 0rem;
+    margin-bottom: 2rem;
+}
+
 .about-header-container {
     display: flex;
     flex-direction: column;
@@ -149,23 +157,103 @@ body {
     text-align: center;
 }
 
-
-.item{
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  height: 10%;
-  justify-content: center;
-  width: 20%;
-
+.item {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 10%;
+    justify-content: center;
+    width: 20%;
 }
 
-.title{
+.title {
     font-family: 'Header';
+    text-shadow: -1px 2px 2px #a3cca3;
 }
 
-.caption{
+.caption {
     font-family: 'Mukta';
+    font-size: 1.1rem;
+}
 
+.calculate-descriptor {
+    text-align: center;
+    padding: 0 20rem;
+    margin-bottom: 4rem;
+    font-size: 1.25rem;
+}
+.input-container {
+    display: flex;
+    flex-direction: column;
+}
 
+.textfield {
+    padding: 0.5rem 1rem;
+    font-family: 'Mukta';
+    font-size: 1.25rem;
+    border-radius: 5px;
+    transform: translate(0px, 0px);
+    transition: transform 0.2s linear;
+    box-shadow: -2px 2px 2px #a3cca3;
+    transition: box-shadow 0.1s linear;
+    border: none;
+}
+
+.textfield:focus {
+    outline: none;
+    box-shadow: -4px 4px 2px #a3cca3;
+    transform: translate(1px, -1px);
+    transition: transform 0.2s linear;
+    transition: box-shadow 0.1s linear;
+}
+
+.textfield-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.input-button {
+    font-family: 'Mukta';
+    border: none;
+    font-size: 1.25rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--icon-green);
+    transition: background-color 0.2s ease-in-out;
+    border-radius: 5px;
+    margin: 0 auto;
+}
+
+.input-button:hover {
+    background-color: #70db70;
+    transition: background-color 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.input-button:disabled {
+    cursor: not-allowed;
+}
+
+.input-effect {
+    border: 0;
+    padding: 7px 15px;
+    border: 1px solid #ccc;
+    position: relative;
+    background: transparent;
+}
+
+.input-effect ~ .focus-bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+    background-color: #ededed;
+    transition: 0.3s;
+    z-index: -1;
+}
+.input-effect:focus ~ .focus-bg {
+    transition: 0.3s;
+    width: 100%;
 }
