@@ -29,8 +29,20 @@ const Maps = () => {
     const [showConfirmMap, setShowConfirmMap] = useState(false);
     const [showFullOutput, setShowFullOutput] = useState(false);
 
-    const { setTransitStats, setDrivingStats, setWalkingStats, setOriginLat, setOriginLong, setDestinationLat, setDestinationLong, setOriginName, setDestinationName } =
-        useContext(AppContext);
+    const {
+        setTransitStats,
+        setDrivingStats,
+        setWalkingStats,
+        setOriginLat,
+        setOriginLong,
+        setDestinationLat,
+        setDestinationLong,
+        setOriginName,
+        setDestinationName,
+        walkingScore,
+        carScore,
+        transitScore,
+    } = useContext(AppContext);
 
     const originChange = (val) => {
         setOrigin(val);
@@ -143,13 +155,21 @@ const Maps = () => {
                                 </div>
 
                                 <div className='card-container' style={{ marginTop: '6rem', position: 'relative' }}>
-                                    <div className='notification-score'>25</div>
+                                    <div className='notification-score' style={{ backgroundColor: carScore > 75 ? 'green' : carScore > 50 ? 'orange' : 'red' }}>
+                                        {carScore}
+                                    </div>
                                     <img className='transportation-icon' src={Car} alt='car' />
                                 </div>
-                                <div className='card-container'>
+                                <div className='card-container' style={{ position: 'relative' }}>
+                                    <div className='notification-score' style={{ backgroundColor: transitScore > 75 ? 'green' : transitScore > 50 ? 'orange' : 'red' }}>
+                                        {transitScore}
+                                    </div>
                                     <img className='transportation-icon' src={Bus} alt='car' />
                                 </div>
-                                <div className='card-container'>
+                                <div className='card-container' style={{ position: 'relative' }}>
+                                    <div className='notification-score' style={{ backgroundColor: walkingScore > 75 ? 'green' : walkingScore > 50 ? 'orange' : 'red' }}>
+                                        {walkingScore}
+                                    </div>
                                     <img className='transportation-icon' src={Walk} alt='car' />
                                 </div>
 
@@ -174,7 +194,7 @@ const Maps = () => {
                                 <div style={{ margin: '0.5rem 0 3rem' }}>
                                     <button
                                         style={{ margin: '0 1rem' }}
-                                        className='input-button'
+                                        className='back-button'
                                         type='button'
                                         onClick={() => {
                                             setShowConfirmMap(false);
@@ -214,7 +234,6 @@ const Maps = () => {
                                 className='input-button'
                                 type='button'
                                 disabled={origin === '' || destination === '' ? true : false}
-                                style={{ backgroundColor: origin === '' || destination === '' ? 'gray' : 'var(--icon-green)' }}
                                 onClick={() => {
                                     handleLocation();
                                 }}>

@@ -7,20 +7,21 @@ import AppContext from '../../context/AppContext';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function Doughnut3() {
-    const { drivingStats } = useContext(AppContext);
+    const { drivingStats, setTransitScore } = useContext(AppContext);
     let distance = drivingStats.travelDistance.toFixed(1);
     let busDistance = distance * 1.25;
 
- 
-    
     const busEmissions = 80;
     const totalEmissions = (busEmissions * busDistance).toFixed(1);
-    let max = totalEmissions*busDistance;
+    let max = totalEmissions * busDistance;
     let score = 100 - (totalEmissions / max) * 100;
     score = score.toFixed(1);
 
     let bg = [];
     score > 75 ? (bg = ['green', '#c2f0c2']) : score > 50 ? (bg = ['orange', '#c2f0c2']) : (bg = ['red', '#c2f0c2']);
+
+    setTransitScore(score);
+
     const data = {
         datasets: [
             {
@@ -32,6 +33,7 @@ export default function Doughnut3() {
             },
         ],
     };
+
     return (
         <div className='item'>
             <h1 className='title' style={{ marginTop: '0rem' }}>

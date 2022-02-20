@@ -144,7 +144,7 @@ body {
     background-color: black;
     color: white;
     border-radius: 50%;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem;
     transform: translate(20px, -20px);
     font-family: 'Mukta-M';
     font-size: 1.5rem;
@@ -226,7 +226,7 @@ body {
 .textfield:focus {
     outline: none;
     box-shadow: -4px 4px 2px #a3cca3;
-    transform: translate(1px, -1px);
+    transform: translate(2px, -2px);
     transition: transform 0.2s linear;
     transition: box-shadow 0.1s linear;
 }
@@ -256,8 +256,27 @@ body {
     cursor: pointer;
 }
 
+.back-button {
+    font-family: 'Mukta';
+    border: none;
+    font-size: 1.25rem;
+    padding: 0.5rem 1rem;
+    background-color: gray;
+    transition: background-color 0.2s ease-in-out;
+    border-radius: 5px;
+    margin: 0 auto;
+    color: var(--darker-white);
+}
+
+.back-button:hover {
+    background-color: DarkGray;
+    transition: background-color 0.2s ease-in-out;
+    cursor: pointer;
+}
+
 .input-button:disabled {
     cursor: not-allowed;
+    background-color: gray;
 }
 
 .input-effect {

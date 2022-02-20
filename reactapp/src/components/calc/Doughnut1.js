@@ -7,19 +7,21 @@ import AppContext from '../../context/AppContext';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function Doughnut1() {
-    const { walkingStats } = useContext(AppContext);
+    const { walkingStats, setWalkingScore } = useContext(AppContext);
     let walkScore = 100;
     let distance = walkingStats.travelDistance.toFixed(1);
     // let distance = walkingStats.travelDistance !== 0 ? walkingStats.travelDistance : 20;
     let time = walkingStats.travelDuration.toFixed(1);
     // let time = walkingStats.travelDuration !== 0 ? walkingStats.travelDuration : 10;
 
-   // walkScore = walkScore - distance;
-    distance >= 100 ? walkScore = 1 : walkScore = walkScore - distance;
+    // walkScore = walkScore - distance;
+    distance >= 100 ? (walkScore = 1) : (walkScore = walkScore - distance);
     walkScore = walkScore.toFixed(1);
 
     let bg = [];
     walkScore > 75 ? (bg = ['green', '#c2f0c2']) : walkScore > 50 ? (bg = ['orange', '#c2f0c2']) : (bg = ['red', '#c2f0c2']);
+
+    setWalkingScore(walkScore);
 
     const data = {
         datasets: [

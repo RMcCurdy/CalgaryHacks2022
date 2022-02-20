@@ -44,7 +44,7 @@ export default function GoogleMaps() {
     if (!isLoaded) return 'Loading Maps';
 
     return (
-        <GoogleMap mapContainerStyle={mapContainerStyle} zoom={12} center={center}>
+        <GoogleMap mapContainerStyle={mapContainerStyle} zoom={13} center={center}>
             {markers.map(({ id, name, position }) => (
                 <Marker key={id} position={position} onClick={() => handleActiveMarker(id)}>
                     {activeMarker === id ? (
