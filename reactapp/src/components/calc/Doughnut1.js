@@ -9,12 +9,13 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 export default function Doughnut1() {
     const { walkingStats } = useContext(AppContext);
     let walkScore = 100;
-    let distance = walkingStats.travelDistance;
+    let distance = walkingStats.travelDistance.toFixed(1);
     // let distance = walkingStats.travelDistance !== 0 ? walkingStats.travelDistance : 20;
-    let time = walkingStats.travelDuration;
+    let time = walkingStats.travelDuration.toFixed(1);
     // let time = walkingStats.travelDuration !== 0 ? walkingStats.travelDuration : 10;
 
-    walkScore = walkScore - (distance + time) / 6;
+   // walkScore = walkScore - distance;
+    distance >= 100 ? walkScore = 1 : walkScore = walkScore - distance;
     walkScore = walkScore.toFixed(1);
 
     let bg = [];
@@ -42,7 +43,7 @@ export default function Doughnut1() {
             <h2 className='title'>{walkScore}</h2>
             <span className='caption'>
                 Walking will always be the method of transportation with the least emissions. Unfortunately, walking takes time and is not realistic in many circumstances. In this
-                case, we would be walking {distance}km, which would realistically take at least {time} hours.{' '}
+                case, we would be walking {distance}km, which would realistically take at least {time} minutes.{' '}
             </span>
         </div>
     );

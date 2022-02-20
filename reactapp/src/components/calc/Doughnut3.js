@@ -8,13 +8,14 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function Doughnut3() {
     const { drivingStats } = useContext(AppContext);
-    let distance = drivingStats.travelDistance;
+    let distance = drivingStats.travelDistance.toFixed(1);
     let busDistance = distance * 1.25;
 
-    // not sure of max, if its 294 doughnut dne
-    let max = 320 * distance;
+ 
+    
     const busEmissions = 80;
-    const totalEmissions = busEmissions * busDistance;
+    const totalEmissions = (busEmissions * busDistance).toFixed(1);
+    let max = totalEmissions*busDistance;
     let score = 100 - (totalEmissions / max) * 100;
     score = score.toFixed(1);
 
