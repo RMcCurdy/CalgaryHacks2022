@@ -4,21 +4,26 @@ import { Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+const walkScore = 100;
+
+
+
 export const data = {
+
     datasets: [
         {
             label: '# of Votes',
-            data: [75, 25],
-            backgroundColor: ['red', '#c2f0c2'],
-            borderColor: ['burgandy', 'gray'],
+            data: [walkScore, (100-walkScore)],
+            backgroundColor: ['green', '#c2f0c2'],
+            borderColor: ['#c2f0c2', '#c2f0c2'],
             borderWidth: 1,
         },
     ],
 };
 
-export default function MyDoughnut() {
+export default function Doughnut1() {
     return (
-        <div style={{ width: '15%' }}>
+        <div style={{ width: '50%' }}>
             <Doughnut data={data} />
         </div>
     );

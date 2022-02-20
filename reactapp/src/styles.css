@@ -146,4 +146,23 @@ body {
     display: flex;
     justify-content: center;
     gap: 5rem;
+    text-align: center;
+}
+
+
+.item{
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 10%;
+  justify-content: center;
+  width: 20%;
+
+}
+
+.title{
+    font-family: 'Header';
+   
+
+
 }
