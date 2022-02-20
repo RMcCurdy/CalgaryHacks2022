@@ -124,7 +124,7 @@ body {
 }
 
 .content-card-container {
-    display: flex;
+
     gap: 2rem;
     padding: 0 20rem;
 }
@@ -153,6 +153,21 @@ body {
 .content-header {
     font-family: 'Mukta-M';
     font-size: 1.75rem;
+}
+.content-header-reverse {
+    font-family: 'Mukta-M';
+    font-size: 1.75rem;
+    text-align: right;
+}
+
+.content-img{
+
+}
+
+.content-img-reverse{
+
+    text-align: right;
+
 }
 
 .content-descriptor {
