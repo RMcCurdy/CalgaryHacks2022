@@ -1,5 +1,8 @@
 // https://maps.googleapis.com/maps/api/distancematrix/json?destinations=41.6655101%2C-72.89188969999998&origins=40.6655101%2C-73.89188969999998&key=AIzaSyDGPo8L_ttBczo_2qxf3s9NStUhJUXUvFc
 import React from 'react';
+import { useState } from "react";
+import ReactDOM from 'react-dom';
+import axios from 'axios';
 
 import Geocode from 'react-geocode';
 
@@ -11,7 +14,7 @@ Geocode.setLanguage('en');
 
 // set response region. Its optional.
 // A Geocoding request with region=es (Spain) will return the Spanish city.
-Geocode.setRegion('es');
+//Geocode.setRegion('es');
 
 // set location_type filter . Its optional.
 // google geocoder returns more that one address for given lat/lng.
@@ -23,7 +26,7 @@ Geocode.setLocationType('ROOFTOP');
 
 // Enable or disable logs. Its optional.
 Geocode.enableDebug();
-
+/*
 // Get address from latitude & longitude.
 Geocode.fromLatLng('48.8583701', '2.2922926').then(
     (response) => {
@@ -65,10 +68,24 @@ Geocode.fromLatLng('48.8583701', '2.2922926').then(
     (error) => {
         console.error(error);
     },
-);
+);*/
 
+
+function getLatLongFromString(str) {
+    Geocode.fromAddress('10 Brentwood Common NW').then(
+    (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+       return {lat, lng};
+    },
+    (error) => {
+        return error;
+    },
+);         // Function returns the product of a and b
+}
+/*
+//DESTINATION
 // Get latitude & longitude from address.
-Geocode.fromAddress('Riot on VIII').then(
+Geocode.fromAddress('10 Brentwood Common NW').then(
     (response) => {
         const { lat, lng } = response.results[0].geometry.location;
         console.log(lat, lng);
@@ -78,8 +95,62 @@ Geocode.fromAddress('Riot on VIII').then(
     },
 );
 
+//ORIGIN
+// Get latitude & longitude from address.
+Geocode.fromAddress('10 Brentwood Common NW').then(
+    (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        console.log(lat, lng);
+    },
+    (error) => {
+        console.error(error);
+    },
+);*/
+
+let test = getLatLongFromString('10 Brentwood Common NW');
+console.log(test);
+
 const Maps = () => {
-    return <div>Hi</div>;
+    const [origin, setOrigin] = useState("");
+    const [destination, setDestination] = useState("");
+     
+    const submitLocations = () => {
+   
+    const LatLong = {
+      Lat_Or: getLatLongFromString(origin)[0],
+     Long_Or: getLatLongFromString(origin)[1],
+     Lat_Des: getLatLongFromString(destination)[0],
+     Long_Des: getLatLongFromString(destination)[1],
+    }
+
+   let url = 'https://maps.googleapis.com/maps/api/distancematrix/json?destinations='+LatLong.Lat_Des+'%2C+ LatLong.Long_Des'+'&origins='+LatLong.Lat_Or+'%2C'+LatLong.Long_Or+'&key=AIzaSyDGPo8L_ttBczo_2qxf3s9NStUhJUXUvFc';
+   console.log(url);
+    //console.log(LatLong);
+    //history.push();
+  }
+
+    return (
+    <form>
+      <input
+        value={origin}
+        onChange={e => setOrigin(e.target.value)}
+        placeholder="origin"
+        type="text"
+        name="origin"
+        required
+      />
+      <input
+        value={destination}
+        onChange={e => setDestination(e.target.value)}
+        placeholder="destination"
+        type="text"
+        name="destination"
+        required
+      />
+      
+      <button type='button' onClick={submitLocations} >Submit</button>
+    </form>
+);
 };
 
 export default Maps;
