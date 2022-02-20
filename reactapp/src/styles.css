@@ -17,6 +17,7 @@ body {
 :root {
     --background-green: #c2f0c2;
     --icon-green: #47d147;
+    --darker-white: #fafafa;
 }
 
 /* Fonts */
@@ -81,8 +82,8 @@ body {
     left: 0%;
     width: 100vw;
     height: 48px;
-    background-color: #fefefe;
-    box-shadow: 0 10px 100px rgb(0 0 0 / 15%);
+    background-color: var(--darker-white);
+    box-shadow: 0 10px 100px rgb(0 0 0 / 20%);
 }
 
 .navbar-icon {
@@ -122,8 +123,8 @@ body {
 }
 
 .card-container {
-    background-color: #fefefe;
-    padding: 1.5rem;
+    background-color: var(--darker-white);
+    padding: 0.75rem 1.5rem;
     border-radius: 15px;
     box-shadow: -3px 4px 2px #a3cca3;
 }
