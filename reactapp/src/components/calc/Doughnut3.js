@@ -37,7 +37,7 @@ export default function Doughnut3() {
     return (
         <div className='item'>
             <h1 className='title' style={{ marginTop: '0rem' }}>
-                BUS
+                TRANSIT
             </h1>
             <div style={{ width: '50%' }}>
                 <Doughnut data={data} />

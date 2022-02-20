@@ -15,9 +15,9 @@ const EnvCalculator = () => {
                 of your trip, the distance between your locations, and your method of transportation.
             </div>
             <div className='doughnut-container'>
-                <Doughnut1 />
                 <Doughnut2 />
                 <Doughnut3 />
+                <Doughnut1 />
             </div>
         </div>
     );

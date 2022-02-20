@@ -154,23 +154,102 @@ const Maps = () => {
                                     <GoogleMapsMap />
                                 </div>
 
-                                <div className='card-container' style={{ marginTop: '6rem', position: 'relative' }}>
-                                    <div className='notification-score' style={{ backgroundColor: carScore > 75 ? 'green' : carScore > 50 ? 'orange' : 'red' }}>
-                                        {carScore}
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                                    <div style={{ display: 'flex' }}>
+                                        <div className='card-container' style={{ marginTop: '6rem', position: 'relative' }}>
+                                            <div className='notification-score' style={{ backgroundColor: carScore > 75 ? 'green' : carScore > 50 ? 'orange' : 'red' }}>
+                                                {carScore}
+                                            </div>
+                                            <img className='transportation-icon' src={Car} alt='car' />
+                                        </div>
+                                        <div style={{ marginTop: '6rem', marginLeft: '2rem' }}>
+                                            <div className='title-icon'>CAR</div>
+                                            <div style={{ maxWidth: '20vw' }}>
+                                                {carScore > 75 ? (
+                                                    <>
+                                                        <div className='content-icon'>{carScore} is not a great score, you should travel like this! </div>
+                                                        <div className='content-icon'>
+                                                            Not only is this an efficient way of travelling for you, but you are also doing your part in reducing emissions.
+                                                        </div>
+                                                    </>
+                                                ) : carScore > 50 ? (
+                                                    <>
+                                                        <div className='content-icon'>{carScore} is not a bad score, but you could do better. </div>
+                                                        <div className='content-icon'>Try to carpool with a friend or co-worker to reduce the amount of cars on the road.</div>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <div className='content-icon'>{carScore} is a bad score, and is very inefficient. </div>
+                                                        <div className='content-icon'>Try choosing one of the other two options if they have a lower score.</div>
+                                                    </>
+                                                )}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <img className='transportation-icon' src={Car} alt='car' />
-                                </div>
-                                <div className='card-container' style={{ position: 'relative' }}>
-                                    <div className='notification-score' style={{ backgroundColor: transitScore > 75 ? 'green' : transitScore > 50 ? 'orange' : 'red' }}>
-                                        {transitScore}
+                                    <div style={{ display: 'flex' }}>
+                                        <div className='card-container' style={{ position: 'relative' }}>
+                                            <div className='notification-score' style={{ backgroundColor: transitScore > 75 ? 'green' : transitScore > 50 ? 'orange' : 'red' }}>
+                                                {transitScore}
+                                            </div>
+                                            <img className='transportation-icon' src={Bus} alt='car' />
+                                        </div>
+                                        <div style={{ marginTop: '1rem', marginLeft: '2rem' }}>
+                                            <div className='title-icon'>TRANSIT</div>
+                                            <div style={{ maxWidth: '20vw' }}>
+                                                {transitScore > 75 ? (
+                                                    <>
+                                                        <div className='content-icon'>{transitScore} is not a great score, you should travel like this! </div>
+                                                        <div className='content-icon'>
+                                                            Not only is this an efficient way of travelling for you, but you are also doing your part in reducing emissions.
+                                                        </div>
+                                                    </>
+                                                ) : transitScore > 50 ? (
+                                                    <>
+                                                        <div className='content-icon'>{transitScore} is not a bad score, but you could do better. </div>
+                                                        <div className='content-icon'>If you need to use transit, try getting off part way to reduce your carbon footprint!</div>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <div className='content-icon'>{transitScore} is a bad score, and is very inefficient. </div>
+                                                        <div className='content-icon'>Try choosing one of the other two options if they have a lower score.</div>
+                                                    </>
+                                                )}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <img className='transportation-icon' src={Bus} alt='car' />
-                                </div>
-                                <div className='card-container' style={{ position: 'relative' }}>
-                                    <div className='notification-score' style={{ backgroundColor: walkingScore > 75 ? 'green' : walkingScore > 50 ? 'orange' : 'red' }}>
-                                        {walkingScore}
+                                    <div style={{ display: 'flex' }}>
+                                        <div className='card-container' style={{ position: 'relative' }}>
+                                            <div className='notification-score' style={{ backgroundColor: walkingScore > 75 ? 'green' : walkingScore > 50 ? 'orange' : 'red' }}>
+                                                {walkingScore}
+                                            </div>
+                                            <img className='transportation-icon' src={Walk} alt='car' />
+                                        </div>
+                                        <div style={{ marginTop: '1rem', marginLeft: '2rem' }}>
+                                            <div className='title-icon'>WALK</div>
+                                            <div style={{ maxWidth: '20vw' }}>
+                                                {walkingScore > 75 ? (
+                                                    <>
+                                                        <div className='content-icon'>{walkingScore} is a great score, you should travel like this! </div>
+                                                        <div className='content-icon'>
+                                                            Not only is this an efficient way of travelling for you, but you are also doing your part in reducing emissions.
+                                                        </div>
+                                                    </>
+                                                ) : walkingScore > 50 ? (
+                                                    <>
+                                                        <div className='content-icon'>{walkingScore} is not a good score, it will take a long time to travel like this! </div>
+                                                        <div className='content-icon'>
+                                                            Walking will produce the least emissions, but walking to this destination will take a very long time.
+                                                        </div>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <div className='content-icon'>{walkingScore} is a bad score, and is very inefficient. </div>
+                                                        <div className='content-icon'>Try choosing one of the other two options if they have a lower score.</div>
+                                                    </>
+                                                )}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <img className='transportation-icon' src={Walk} alt='car' />
                                 </div>
 
                                 <EnvCalculator />
