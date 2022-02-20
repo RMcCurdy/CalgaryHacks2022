@@ -7,7 +7,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 let distance = 20;
 let busDistance = distance*1.25;
 
-// not sure of max, is its 294 doughnut dne
+// not sure of max, if its 294 doughnut dne
 let max = (320 * distance);
 const busEmissions = 80;
 const totalEmissions = busEmissions*busDistance;
