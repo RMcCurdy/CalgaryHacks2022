@@ -2,6 +2,8 @@ import React from 'react';
 import { useState, useContext } from 'react';
 import AppContext from '../../context/AppContext';
 
+import GoogleMapsMap from './GoogleMapsMap';
+
 import Geocode from 'react-geocode';
 
 Geocode.setApiKey('AIzaSyDGPo8L_ttBczo_2qxf3s9NStUhJUXUvFc');
@@ -15,7 +17,9 @@ const Maps = () => {
     const [originLatLong, setOriginLatLong] = useState(null);
     const [destinationLatLong, setDestinationLatLong] = useState(null);
 
-    const { setTransitStats, setDrivingStats, setWalkingStats } = useContext(AppContext);
+    const [showConfirmMap, setShowConfirmMap] = useState(false);
+
+    const { setTransitStats, setDrivingStats, setWalkingStats, setOriginLat, setOriginLong, originLat, originLong } = useContext(AppContext);
 
     const originChange = (val) => {
         setOrigin(val);
@@ -30,6 +34,9 @@ const Maps = () => {
     const handleLocation = () => {
         fetchDestinationGeocode();
         fetchOriginGeocode();
+        setTimeout(() => {
+            setShowConfirmMap(true);
+        }, 1000);
     };
 
     const fetchOriginGeocode = () => {
@@ -37,6 +44,8 @@ const Maps = () => {
             (response) => {
                 const { lat, lng } = response.results[0].geometry.location;
                 setOriginLatLong([lat.toString(), lng.toString()]);
+                setOriginLat(lat);
+                setOriginLong(lng);
                 return [lat.toString(), lng.toString()];
             },
             (error) => {
@@ -105,49 +114,66 @@ const Maps = () => {
             <div className='page-container'>
                 <div className='about-header-container'>
                     <h6 className='about-semi-header'>- save the environment with -</h6>
-                    <h1 className='about-header'>ECOMAPS</h1>
+                    <h1 className='about-header'>EcoMaps</h1>
                 </div>
-                <div className='route-descriptor'>Please provide your starting and end location to begin your journey!</div>
-                <div className='input-container'>
-                    <div className='textfield-container'>
-                        <input className='textfield' value={origin} onChange={(e) => originChange(e.target.value)} placeholder='Start Location' type='text' name='origin' />
-                        <input
-                            className='textfield'
-                            value={destination}
-                            onChange={(e) => destinationChange(e.target.value)}
-                            placeholder='End Location'
-                            type='text'
-                            name='destination'
-                        />
+                {showConfirmMap ? (
+                    <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', margin: '0 auto' }}>
+                        <GoogleMapsMap />
+                        <div style={{ marginTop: '2rem' }}>
+                            <button
+                                style={{ margin: '0 1rem' }}
+                                className='input-button'
+                                type='button'
+                                onClick={() => {
+                                    setShowConfirmMap(false);
+                                }}>
+                                Back
+                            </button>
+                            <button
+                                style={{ margin: '0 1rem' }}
+                                className='input-button'
+                                type='button'
+                                onClick={() => {
+                                    handleSubmit();
+                                }}>
+                                Find Routes
+                            </button>
+                        </div>
                     </div>
+                ) : (
+                    <>
+                        <div className='route-descriptor'>Please provide your starting and end location to begin your journey!</div>
+                        <div className='input-container'>
+                            <div className='textfield-container'>
+                                <input className='textfield' value={origin} onChange={(e) => originChange(e.target.value)} placeholder='Start Location' type='text' name='origin' />
+                                <input
+                                    className='textfield'
+                                    value={destination}
+                                    onChange={(e) => destinationChange(e.target.value)}
+                                    placeholder='End Location'
+                                    type='text'
+                                    name='destination'
+                                />
+                            </div>
 
-                    <button
-                        className='input-button'
-                        type='button'
-                        disabled={origin === '' || destination === '' ? true : false}
-                        style={{ backgroundColor: origin === '' || destination === '' ? 'gray' : 'var(--icon-green)' }}
-                        onClick={() => {
-                            handleLocation();
-                        }}>
-                        Search
-                    </button>
-                    <img class='leaf leaf2' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
-                    <img class='leaf leaf3' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
-                    <img class='leaf leaf4' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
-                    <img class='leaf leaf5' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
-                    <img class='leaf leaf6' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
-                    {/* <img class='leaf' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' /> */}
-                    {/* <img class='leaf' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' /> */}
-                    {/* <img class='leaf' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' /> */}
-                </div>
-                {/* <button
-                    className='input-button'
-                    type='button'
-                    onClick={() => {
-                        handleSubmit();
-                    }}>
-                    Submit
-                </button> */}
+                            <button
+                                className='input-button'
+                                type='button'
+                                disabled={origin === '' || destination === '' ? true : false}
+                                style={{ backgroundColor: origin === '' || destination === '' ? 'gray' : 'var(--icon-green)' }}
+                                onClick={() => {
+                                    handleLocation();
+                                }}>
+                                Search
+                            </button>
+                            <img className='leaf leaf2' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
+                            <img className='leaf leaf3' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
+                            <img className='leaf leaf4' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
+                            <img className='leaf leaf5' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
+                            <img className='leaf leaf6' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
+                        </div>
+                    </>
+                )}
             </div>
         </>
     );
