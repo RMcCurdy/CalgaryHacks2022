@@ -9,9 +9,9 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 export default function Doughnut2() {
     const { drivingStats } = useContext(AppContext);
     let selection = 'truck';
-    let distance = drivingStats.travelDistance;
+    let distance = drivingStats.travelDistance.toFixed(1);
     // let distance = drivingStats.travelDistance !== 0 ? drivingStats.travelDistance : 20;
-    let duration = drivingStats.travelDuration;
+    let duration = drivingStats.travelDuration.toFixed(1);
     // let duration = drivingStats.travelDuration !== 0 ? drivingStats.travelDuration : 20;
     let carEmissions = 220;
     let carpool = 2;
@@ -26,8 +26,21 @@ export default function Doughnut2() {
         carEmissions = 294;
     }
 
-    let totalEmissions = (carEmissions * distance) / carpool;
-    let score = 100 - totalEmissions / (totalEmissions * 1.5) - duration;
+     let busDistance = distance * 1.25;
+    const busEmissions = 80;
+    const bustotalEmissions = (busEmissions * busDistance).toFixed(1);
+
+
+
+
+    let totalEmissions = ((carEmissions * distance) / carpool).toFixed(1);
+
+    let diff = 1- (totalEmissions-bustotalEmissions)/totalEmissions;
+
+
+    let max = totalEmissions*busDistance;
+    let score = 100 - (bustotalEmissions / max) * 100;
+    score = diff.toFixed(1)*score.toFixed(1);
     score = score.toFixed(1);
 
     let bg = [];
@@ -54,7 +67,7 @@ export default function Doughnut2() {
             </div>
             <h2 className='title'>{score}</h2>
             <span className='caption'>
-                Driving is usually produces the most emissions, especially in a large SUV or truck. In this case, driving {distance}km would produce {totalEmissions}g of GHGs,
+                Driving usually produces the most emissions, especially in a large SUV or truck. In this case, driving {distance}km would produce {totalEmissions}g of GHGs,
                 giving a score of {score} out of 100.
             </span>
         </div>
