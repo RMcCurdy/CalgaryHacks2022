@@ -7,8 +7,8 @@ import AppContext from '../../context/AppContext';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function Doughnut2() {
-    const { drivingStats, setCarScore } = useContext(AppContext);
-    let selection = 'truck';
+    const { drivingStats, setCarScore, selection } = useContext(AppContext);
+
     let distance = drivingStats.travelDistance.toFixed(1);
     // let distance = drivingStats.travelDistance !== 0 ? drivingStats.travelDistance : 20;
     let duration = drivingStats.travelDuration.toFixed(1);

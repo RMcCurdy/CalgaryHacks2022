@@ -379,3 +379,27 @@ body {
 .transportation-icon {
     width: 10vw;
 }
+
+.arrow-icon {
+    margin: 0 0.5rem;
+}
+
+.arrow-icon:hover {
+    cursor: pointer;
+}
+
+.fade-out {
+    animation: fadeOut 1s;
+    opacity: 0;
+    display: flex;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        display: none;
+    }
+}
