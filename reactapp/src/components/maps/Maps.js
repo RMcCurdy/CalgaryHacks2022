@@ -4,6 +4,8 @@ import AppContext from '../../context/AppContext';
 
 import GoogleMapsMap from './GoogleMapsMap';
 
+import EnvCalculator from '../calc/EnvCalculator';
+
 import Car from '../../images/car.png';
 import SUV from '../../images/suv.png';
 import Truck from '../../images/truck.png';
@@ -139,15 +141,19 @@ const Maps = () => {
                                 <div style={{ border: '2px solid var(--icon-green)' }}>
                                     <GoogleMapsMap />
                                 </div>
-                                <div>
+
+                                <div className='card-container' style={{ marginTop: '6rem', position: 'relative' }}>
+                                    <div className='notification-score'>25</div>
                                     <img className='transportation-icon' src={Car} alt='car' />
                                 </div>
-                                <div>
+                                <div className='card-container'>
                                     <img className='transportation-icon' src={Bus} alt='car' />
                                 </div>
-                                <div>
+                                <div className='card-container'>
                                     <img className='transportation-icon' src={Walk} alt='car' />
                                 </div>
+
+                                <EnvCalculator />
                             </>
                         ) : (
                             <>

@@ -26,15 +26,15 @@ const Navbar = () => {
                     onClick={() => {
                         handleNavbarClick('/');
                     }}>
-                    Route Planner
+                    Home
                 </div>
-                <div
+                {/* <div
                     className={location.pathname === '/calculate' ? 'navbar-link-current' : 'navbar-link navbar-link-color-animation'}
                     onClick={() => {
                         handleNavbarClick('/calculate');
                     }}>
                     EcoCalculator
-                </div>
+                </div> */}
                 <div
                     className={location.pathname === '/about' ? 'navbar-link-current' : 'navbar-link navbar-link-color-animation'}
                     onClick={() => {

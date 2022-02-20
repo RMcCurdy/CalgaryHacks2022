@@ -10,6 +10,10 @@ const AppState = (props) => {
     const [destinationLat, setDestinationLat] = useState(0);
     const [destinationLong, setDestinationLong] = useState(0);
 
+    const [carScore, setCarScore] = useState(0);
+    const [transitScore, setTransitScore] = useState(0);
+    const [walkingScore, setWalkingScore] = useState(0);
+
     const [originName, setOriginName] = useState('');
     const [destinationName, setDestinationName] = useState('');
 
@@ -34,6 +38,12 @@ const AppState = (props) => {
                 setOriginName,
                 destinationName,
                 setDestinationName,
+                carScore,
+                setCarScore,
+                transitScore,
+                setTransitScore,
+                walkingScore,
+                setWalkingScore,
             }}>
             {props.children}
         </AppContext.Provider>
