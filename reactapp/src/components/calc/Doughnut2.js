@@ -23,6 +23,7 @@ if(selection === 'truck'){
 
 let totalEmissions = (carEmissions * distance)/carpool;
 let score = 100 - (totalEmissions/max)*100;
+score = score.toFixed(1);
 
 let bg = [];
 score > 66 ? bg = ['green', '#c2f0c2'] : score > 33 ? bg = ['orange', '#c2f0c2'] : bg = ['red', '#c2f0c2'];
@@ -41,8 +42,14 @@ export const data = {
 
 export default function Doughnut2() {
     return (
-        <div style={{ width: '50%' }}>
-            <Doughnut data={data} />
-        </div>
+         <div className='item'>
+                <div style={{ width: '50%' }}>
+                <Doughnut data={data} />
+                 </div>
+                <h1 className="title"> CAR</h1>
+                <span className="caption">
+                Driving is usually produces the most emissions, especially in a large SUV or truck.  
+                In this case, driving {distance}km would produce {totalEmissions}g of GHGs, giving a score of {score} out of 100.</span>
+                </div>
     );
 }
