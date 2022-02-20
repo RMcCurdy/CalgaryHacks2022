@@ -1,8 +1,6 @@
 // https://maps.googleapis.com/maps/api/distancematrix/json?destinations=41.6655101%2C-72.89188969999998&origins=40.6655101%2C-73.89188969999998&key=AIzaSyDGPo8L_ttBczo_2qxf3s9NStUhJUXUvFc
 import React from 'react';
-import { useState } from "react";
-import ReactDOM from 'react-dom';
-import axios from 'axios';
+import { useState } from 'react';
 
 import Geocode from 'react-geocode';
 
@@ -70,8 +68,6 @@ Geocode.fromLatLng('48.8583701', '2.2922926').then(
     },
 );*/
 
-
-
 //DESTINATION
 // Get latitude & longitude from address.
 /*Geocode.fromAddress('10 Brentwood Common NW').then(
@@ -97,78 +93,137 @@ Geocode.fromAddress('10 Brentwood Common NW').then(
 );
 */
 
-
-
 const Maps = () => {
-    const [origin, setOrigin] = useState("");
-    const [destination, setDestination] = useState("");
-    //const [origin_latlong, setOriginlatLong] = useState(null);
-    //const [destination_latLong, setDestinationlatLong] = useState(null);
+    const [origin, setOrigin] = useState('10 Brentwood Common NW');
+    const [destination, setDestination] = useState('University of Calgary');
+    const [originLatLong, setOriginLatLong] = useState(null);
+    const [destinationLatLong, setDestinationLatLong] = useState(null);
 
+    const originChange = (val) => {
+        setOrigin(val);
+        Geocode.fromAddress(val).then(
+            (response) => {
+                const { lat, lng } = response.results[0].geometry.location;
+                setOriginLatLong([lat, lng]);
+            },
+            (error) => {
+                return error;
+            },
+        );
+    };
 
-    const getLatLongFromString = (str) =>{
-        Geocode.fromAddress(str).then(
-        (response) => {
-            const { lat, lng } = response.results[0].geometry.location;
-         return [lat, lng];
-        },
-        (error) => {
-            return error;
-        },
-        );         // Function returns the product of a and b
-    }
-
-    //console.log( getLatLongFromString(origin) ); 
-
-
+    const destinationChange = (val) => {
+        setDestination(val);
+        Geocode.fromAddress(val).then(
+            (response) => {
+                const { lat, lng } = response.results[0].geometry.location;
+                setDestinationLatLong([lat, lng]);
+            },
+            (error) => {
+                return error;
+            },
+        );
+    };
 
     const submitLocations = () => {
-        const dest = getLatLongFromString(destination);
-        const orig = getLatLongFromString(origin);
-        console.log(dest);
-        console.log(orig);
+        const url = `https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?origins=${originLatLong[0]},${originLatLong[1]}&destinations=${destinationLatLong[0]},${destinationLatLong[1]}&travelMode=driving&key=AgY8Tz1I-3e1GUD0ylU5dDBT6-xG9k3SqreJGYxdmliZeCXFhLSgd29LUezMYRLs`;
+        // const url = `https://maps.googleapis.com/maps/api/distancematrix/json?departure_time=now&destinations=51.086970%2C-114.128290&origins=51.043500%2C-114.070430&key=AIzaSyDGPo8L_ttBczo_2qxf3s9NStUhJUXUvFc`;
+        // const url = `https://maps.googleapis.com/maps/api/distancematrix/json?destinations=
+        //     ${destinationLatLong[0]}
+        //     %2C
+        //     ${destinationLatLong[1]}
+        //     &origins=
+        //     ${originLatLong[0]}
+        //     %2C
+        //     ${originLatLong[1]}
+        //     &key=AIzaSyDGPo8L_ttBczo_2qxf3s9NStUhJUXUvFc`;
+        fetch(url, {
+            // headers: {
+            //     // 'Access-Control-Allow-Origin': '*',
+            //     'Access-Control-Allow-Methods': 'GET',
+            //     // 'Access-Control-Allow-Headers': '*',
+            //     'Access-Control-Allow-Credentials': 'true',
+            //     // 'Content-Type': 'application/json',
+            // },
+        })
+            .then((response) => response.json())
+            .then((data) => console.log('Data from fetch: ', data))
+            .catch((error) => {
+                console.error('There was an error!', error);
+            });
 
-       // setDestinationlatLong(dest);
-       // setOriginlatLong(getLatLongFromString(origin));
-       // console.log(destination_latLong);
+        // const res = await fetch(
+        //     'https://maps.googleapis.com/maps/api/distancematrix/json?destinations=' +
+        //         destinationLatLong[0] +
+        //         '%2C' +
+        //         destinationLatLong[1] +
+        //         '&origins=' +
+        //         originLatLong[0] +
+        //         '%2C' +
+        //         originLatLong[1] +
+        //         '&key=AIzaSyDGPo8L_ttBczo_2qxf3s9NStUhJUXUvFc',
+        //     {
+        //         mode: 'cors',
+        //         headers: {
+        //             'Access-Control-Allow-Origin': '*',
+        //             'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+        //             'Content-Type': 'application/json',
+        //         },
+        //     },
+        // );
+        // console.log(res);
+        // const data = await res.json();
+        // if (data.message !== undefined) {
+        //     console.log('ERROR');
+        // } else {
+        //     console.log(data);
+        // }
 
-    /*let LatLong = {
-      Lat_Or: getLatLongFromString(origin)[0],
-     Long_Or: getLatLongFromString(origin)[1],
-     Lat_Des: getLatLongFromString(destination)[0],
-     Long_Des: getLatLongFromString(destination)[1],
-    }*/
+        // fetch(
+        //     'https://maps.googleapis.com/maps/api/distancematrix/json?destinations=' +
+        //         destinationLatLong[0] +
+        //         '%2C' +
+        //         destinationLatLong[1] +
+        //         '&origins=' +
+        //         originLatLong[0] +
+        //         '%2C' +
+        //         originLatLong[1] +
+        //         '&key=AIzaSyDGPo8L_ttBczo_2qxf3s9NStUhJUXUvFc',
+        // )
+        //     .then(async (response) => {
+        //         const data = await response.json();
 
+        //         // check for error response
+        //         if (!response.ok) {
+        //             // get error message from body or default to response statusText
+        //             const error = (data && data.message) || response.statusText;
+        //             return Promise.reject(error);
+        //         }
 
+        //         console.log(data);
+        //     })
+        //     .catch((error) => {
+        //         console.error('There was an error!', error);
+        //     });
 
-  // let url = 'https://maps.googleapis.com/maps/api/distancematrix/json?destinations='+LatLong.Lat_Des+'%2C+ LatLong.Long_Des'+'&origins='+LatLong.Lat_Or+'%2C'+LatLong.Long_Or+'&key=AIzaSyDGPo8L_ttBczo_2qxf3s9NStUhJUXUvFc';
-   //console.log(url);
-    //console.log(LatLong);
-    //history.push();
-  }
+        // let url = 'https://maps.googleapis.com/maps/api/distancematrix/json?destinations='+LatLong.Lat_Des+'%2C+ LatLong.Long_Des'+'&origins='+LatLong.Lat_Or+'%2C'+LatLong.Long_Or+'&key=AIzaSyDGPo8L_ttBczo_2qxf3s9NStUhJUXUvFc';
+        //console.log(url);
+        //console.log(LatLong);
+        //history.push();
+    };
 
     return (
-    <form>
-      <input
-        value={origin}
-        onChange={e => setOrigin(e.target.value)}
-        placeholder="origin"
-        type="text"
-        name="origin"
-        required
-      />
-      <input
-        value={destination}
-        onChange={e => setDestination(e.target.value)}
-        placeholder="destination"
-        type="text"
-        name="destination"
-        required
-      />
-      
-      <button type='button' onClick={submitLocations} >Submit</button>
-    </form>
-);
+        <>
+            <input value={origin} onChange={(e) => originChange(e.target.value)} placeholder='origin' type='text' name='origin' required />
+            <input value={destination} onChange={(e) => destinationChange(e.target.value)} placeholder='destination' type='text' name='destination' required />
+
+            <button type='button' onClick={submitLocations}>
+                Submit
+            </button>
+            <div>{originLatLong}</div>
+            <div>{destinationLatLong}</div>
+        </>
+    );
 };
 
 export default Maps;
