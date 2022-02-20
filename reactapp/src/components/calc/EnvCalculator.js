@@ -8,7 +8,11 @@ const EnvCalculator = () => {
                 <h6 className='about-semi-header'>- how we can -</h6>
                 <h1 className='about-header'>CALCULATE</h1>
             </div>
-            <MyDoughnut />
+            <div className='doughnut-container'>
+                <MyDoughnut />
+                <MyDoughnut />
+                <MyDoughnut />
+            </div>
         </div>
     );
 };

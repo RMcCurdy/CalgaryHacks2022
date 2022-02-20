@@ -96,56 +96,49 @@ Geocode.fromAddress('10 Brentwood Common NW').then(
 const Maps = () => {
     const [origin, setOrigin] = useState('10 Brentwood Common NW');
     const [destination, setDestination] = useState('University of Calgary');
-    const [originLatLong, setOriginLatLong] = useState(null);
-    const [destinationLatLong, setDestinationLatLong] = useState(null);
+    // const [originLatLong, setOriginLatLong] = useState(null);
+    // const [destinationLatLong, setDestinationLatLong] = useState(null);
 
     const originChange = (val) => {
         setOrigin(val);
-        Geocode.fromAddress(val).then(
-            (response) => {
-                const { lat, lng } = response.results[0].geometry.location;
-                setOriginLatLong([lat, lng]);
-            },
-            (error) => {
-                return error;
-            },
-        );
     };
 
     const destinationChange = (val) => {
         setDestination(val);
-        Geocode.fromAddress(val).then(
-            (response) => {
-                const { lat, lng } = response.results[0].geometry.location;
-                setDestinationLatLong([lat, lng]);
-            },
-            (error) => {
-                return error;
-            },
-        );
     };
 
     const submitLocations = () => {
+        const geocodeOrigin = async () => {
+            await Geocode.fromAddress(origin).then(
+                (response) => {
+                    const { lat, lng } = response.results[0].geometry.location;
+                    return [lat.toString(), lng.toString()];
+                },
+                (error) => {
+                    return error;
+                },
+            );
+        };
+
+        const geocodeDestination = async () => {
+            await Geocode.fromAddress(destination).then(
+                (response) => {
+                    const { lat, lng } = response.results[0].geometry.location;
+                    return [lat.toString(), lng.toString()];
+                },
+                (error) => {
+                    return error;
+                },
+            );
+        };
+
+        let originLatLong = geocodeOrigin();
+        let destinationLatLong = geocodeDestination();
+
         const url = `https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?origins=${originLatLong[0]},${originLatLong[1]}&destinations=${destinationLatLong[0]},${destinationLatLong[1]}&travelMode=driving&key=AgY8Tz1I-3e1GUD0ylU5dDBT6-xG9k3SqreJGYxdmliZeCXFhLSgd29LUezMYRLs`;
-        // const url = `https://maps.googleapis.com/maps/api/distancematrix/json?departure_time=now&destinations=51.086970%2C-114.128290&origins=51.043500%2C-114.070430&key=AIzaSyDGPo8L_ttBczo_2qxf3s9NStUhJUXUvFc`;
-        // const url = `https://maps.googleapis.com/maps/api/distancematrix/json?destinations=
-        //     ${destinationLatLong[0]}
-        //     %2C
-        //     ${destinationLatLong[1]}
-        //     &origins=
-        //     ${originLatLong[0]}
-        //     %2C
-        //     ${originLatLong[1]}
-        //     &key=AIzaSyDGPo8L_ttBczo_2qxf3s9NStUhJUXUvFc`;
-        fetch(url, {
-            // headers: {
-            //     // 'Access-Control-Allow-Origin': '*',
-            //     'Access-Control-Allow-Methods': 'GET',
-            //     // 'Access-Control-Allow-Headers': '*',
-            //     'Access-Control-Allow-Credentials': 'true',
-            //     // 'Content-Type': 'application/json',
-            // },
-        })
+        // const url = `https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?origins=51.043500,-114.070430&destinations=51.086970,-114.128290&travelMode=transit&key=AgY8Tz1I-3e1GUD0ylU5dDBT6-xG9k3SqreJGYxdmliZeCXFhLSgd29LUezMYRLs`;
+
+        fetch(url)
             .then((response) => response.json())
             .then((data) => console.log('Data from fetch: ', data))
             .catch((error) => {
@@ -220,8 +213,6 @@ const Maps = () => {
             <button type='button' onClick={submitLocations}>
                 Submit
             </button>
-            <div>{originLatLong}</div>
-            <div>{destinationLatLong}</div>
         </>
     );
 };

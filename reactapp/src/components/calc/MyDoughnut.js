@@ -8,21 +8,18 @@ export const data = {
     datasets: [
         {
             label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-            ],
-            borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
+            data: [75, 25],
+            backgroundColor: ['red', '#c2f0c2'],
+            borderColor: ['burgandy', 'gray'],
             borderWidth: 1,
         },
     ],
 };
 
 export default function MyDoughnut() {
-    return <Doughnut data={data} />;
+    return (
+        <div style={{ width: '15%' }}>
+            <Doughnut data={data} />
+        </div>
+    );
 }
