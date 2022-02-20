@@ -3,7 +3,7 @@ import AppState from './context/AppState';
 
 // Components
 import Navbar from './Navbar';
-import RoutePlanner from './components/routePlanner/RoutePlanner';
+import RoutePlanner from './components/maps/Maps';
 import EnvCalculator from './components/calc/EnvCalculator';
 import HowItWorks from './components/howitworks/HowItWorks';
 

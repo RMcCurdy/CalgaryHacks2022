@@ -102,38 +102,53 @@ const Maps = () => {
 
     return (
         <>
-            <div className='input-container'>
-                <div className='textfield-container'>
-                    <input className='textfield' value={origin} onChange={(e) => originChange(e.target.value)} placeholder='Start Location' type='text' name='origin' />
-                    <input
-                        className='textfield'
-                        value={destination}
-                        onChange={(e) => destinationChange(e.target.value)}
-                        placeholder='End Location'
-                        type='text'
-                        name='destination'
-                    />
+            <div className='page-container'>
+                <div className='about-header-container'>
+                    <h6 className='about-semi-header'>- save the environment with -</h6>
+                    <h1 className='about-header'>ECOMAPS</h1>
                 </div>
+                <div className='route-descriptor'>Please provide your starting and end location to begin your journey!</div>
+                <div className='input-container'>
+                    <div className='textfield-container'>
+                        <input className='textfield' value={origin} onChange={(e) => originChange(e.target.value)} placeholder='Start Location' type='text' name='origin' />
+                        <input
+                            className='textfield'
+                            value={destination}
+                            onChange={(e) => destinationChange(e.target.value)}
+                            placeholder='End Location'
+                            type='text'
+                            name='destination'
+                        />
+                    </div>
 
-                <button
+                    <button
+                        className='input-button'
+                        type='button'
+                        disabled={origin === '' || destination === '' ? true : false}
+                        style={{ backgroundColor: origin === '' || destination === '' ? 'gray' : 'var(--icon-green)' }}
+                        onClick={() => {
+                            handleLocation();
+                        }}>
+                        Search
+                    </button>
+                    <img class='leaf leaf2' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
+                    <img class='leaf leaf3' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
+                    <img class='leaf leaf4' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
+                    <img class='leaf leaf5' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
+                    <img class='leaf leaf6' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
+                    {/* <img class='leaf' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' /> */}
+                    {/* <img class='leaf' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' /> */}
+                    {/* <img class='leaf' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' /> */}
+                </div>
+                {/* <button
                     className='input-button'
                     type='button'
-                    disabled={origin === '' || destination === '' ? true : false}
-                    style={{ backgroundColor: origin === '' || destination === '' ? 'gray' : 'var(--icon-green)' }}
                     onClick={() => {
-                        handleLocation();
+                        handleSubmit();
                     }}>
-                    Search
-                </button>
+                    Submit
+                </button> */}
             </div>
-            <button
-                className='input-button'
-                type='button'
-                onClick={() => {
-                    handleSubmit();
-                }}>
-                Submit
-            </button>
         </>
     );
 };

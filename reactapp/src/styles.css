@@ -182,6 +182,14 @@ body {
     margin-bottom: 4rem;
     font-size: 1.25rem;
 }
+
+.route-descriptor {
+    text-align: center;
+    padding: 0 20rem;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+
 .input-container {
     display: flex;
     flex-direction: column;
@@ -256,4 +264,51 @@ body {
 .input-effect:focus ~ .focus-bg {
     transition: 0.3s;
     width: 100%;
+}
+
+.leaf {
+    width: 100px;
+    position: fixed;
+}
+.leaf2 {
+    bottom: 10%;
+    left: -10%;
+    animation: blowing 12s 1s linear infinite;
+}
+.leaf3 {
+    bottom: 15vh;
+    left: -10%;
+    animation: blowing 6s linear infinite;
+}
+.leaf4 {
+    bottom: 8vh;
+    left: -10%;
+    animation: blowing 9s 2.5s linear infinite;
+}
+.leaf5 {
+    bottom: 2vh;
+    left: -10%;
+    animation: blowing 15s 0.5s linear infinite;
+}
+.leaf6 {
+    bottom: 7.5vh;
+    left: -10%;
+    animation: blowing 11s linear infinite;
+}
+@keyframes blowing {
+    0% {
+        transform: translate(0, 0) rotate(0);
+    }
+    20% {
+        transform: translate(20vw, -8vh) rotate(170deg);
+    }
+    55% {
+        transform: translate(50vw, -7vh) rotate(550deg);
+    }
+    80% {
+        transform: translate(85vw, -12vh) rotate(740deg);
+    }
+    100% {
+        transform: translate(110vw, -20vh) rotate(920deg);
+    }
 }
