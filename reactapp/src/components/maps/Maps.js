@@ -6,6 +6,9 @@ import GoogleMapsMap from './GoogleMapsMap';
 
 import EnvCalculator from '../calc/EnvCalculator';
 
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
 import Car from '../../images/car.png';
 import SUV from '../../images/suv.png';
 import Truck from '../../images/truck.png';
@@ -29,6 +32,10 @@ const Maps = () => {
     const [showConfirmMap, setShowConfirmMap] = useState(false);
     const [showFullOutput, setShowFullOutput] = useState(false);
 
+    const [startAnimationOne, setStartAnimationOne] = useState(false);
+
+    const carTransports = ['car', 'suv', 'truck'];
+
     const {
         setTransitStats,
         setDrivingStats,
@@ -42,6 +49,8 @@ const Maps = () => {
         walkingScore,
         carScore,
         transitScore,
+        selection,
+        setSelection,
     } = useContext(AppContext);
 
     const originChange = (val) => {
@@ -59,6 +68,7 @@ const Maps = () => {
     const handleLocation = () => {
         fetchDestinationGeocode();
         fetchOriginGeocode();
+        setStartAnimationOne(true);
         setTimeout(() => {
             setShowConfirmMap(true);
         }, 2000);
@@ -139,6 +149,26 @@ const Maps = () => {
             });
     };
 
+    const incrementCarArray = () => {
+        if (selection === 'car') {
+            setSelection('suv');
+        } else if (selection === 'suv') {
+            setSelection('truck');
+        } else {
+            setSelection('car');
+        }
+    };
+
+    const decrementCarArray = () => {
+        if (selection === 'car') {
+            setSelection('truck');
+        } else if (selection === 'suv') {
+            setSelection('car');
+        } else {
+            setSelection('suv');
+        }
+    };
+
     return (
         <>
             <div className='page-container'>
@@ -153,18 +183,34 @@ const Maps = () => {
                                 <div style={{ border: '2px solid var(--icon-green)' }}>
                                     <GoogleMapsMap />
                                 </div>
+                                <div className='route-descriptor' style={{ marginTop: '3rem', marginBottom: '0' }}>
+                                    Below are the different methods of transportation and their EcoMaps Rating.
+                                </div>
+                                <div className='route-descriptor' style={{ marginTop: '0', marginBottom: '0', fontFamily: 'Mukta-EL' }}>
+                                    To find out more about the EcoMaps Rating, scroll to the bottom of the page.
+                                </div>
 
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
                                     <div style={{ display: 'flex' }}>
-                                        <div className='card-container' style={{ marginTop: '6rem', position: 'relative' }}>
+                                        <div className='card-container' style={{ marginTop: '3rem', position: 'relative' }}>
                                             <div className='notification-score' style={{ backgroundColor: carScore > 75 ? 'green' : carScore > 50 ? 'orange' : 'red' }}>
                                                 {carScore}
                                             </div>
-                                            <img className='transportation-icon' src={Car} alt='car' />
+                                            {selection === 'car' ? (
+                                                <img className='transportation-icon' src={Car} alt='car' />
+                                            ) : selection === 'suv' ? (
+                                                <img className='transportation-icon' src={SUV} alt='suv' />
+                                            ) : (
+                                                <img className='transportation-icon' src={Truck} alt='truck' />
+                                            )}
                                         </div>
-                                        <div style={{ marginTop: '6rem', marginLeft: '2rem' }}>
-                                            <div className='title-icon'>CAR</div>
-                                            <div style={{ maxWidth: '20vw' }}>
+                                        <div style={{ marginTop: '3rem', marginLeft: '2rem' }}>
+                                            <div className='title-icon'>
+                                                <ArrowBackIosIcon className='arrow-icon' onClick={decrementCarArray} />
+                                                {selection === 'car' ? <span>CAR</span> : selection === 'suv' ? <span>SUV</span> : <span>TRUCK</span>}
+                                                <ArrowForwardIosIcon className='arrow-icon' onClick={incrementCarArray} />
+                                            </div>
+                                            <div style={{ maxWidth: '25vw' }}>
                                                 {carScore > 75 ? (
                                                     <>
                                                         <div className='content-icon'>{carScore} is not a great score, you should travel like this! </div>
@@ -195,7 +241,7 @@ const Maps = () => {
                                         </div>
                                         <div style={{ marginTop: '1rem', marginLeft: '2rem' }}>
                                             <div className='title-icon'>TRANSIT</div>
-                                            <div style={{ maxWidth: '20vw' }}>
+                                            <div style={{ maxWidth: '25vw' }}>
                                                 {transitScore > 75 ? (
                                                     <>
                                                         <div className='content-icon'>{transitScore} is not a great score, you should travel like this! </div>
@@ -226,7 +272,7 @@ const Maps = () => {
                                         </div>
                                         <div style={{ marginTop: '1rem', marginLeft: '2rem' }}>
                                             <div className='title-icon'>WALK</div>
-                                            <div style={{ maxWidth: '20vw' }}>
+                                            <div style={{ maxWidth: '25vw' }}>
                                                 {walkingScore > 75 ? (
                                                     <>
                                                         <div className='content-icon'>{walkingScore} is a great score, you should travel like this! </div>
@@ -251,7 +297,6 @@ const Maps = () => {
                                         </div>
                                     </div>
                                 </div>
-
                                 <EnvCalculator />
                             </>
                         ) : (
@@ -295,35 +340,85 @@ const Maps = () => {
                     </div>
                 ) : (
                     <>
-                        <div className='route-descriptor'>Please provide your starting and end location to begin your journey!</div>
-                        <div className='input-container'>
-                            <div className='textfield-container'>
-                                <input className='textfield' value={origin} onChange={(e) => originChange(e.target.value)} placeholder='Start Location' type='text' name='origin' />
-                                <input
-                                    className='textfield'
-                                    value={destination}
-                                    onChange={(e) => destinationChange(e.target.value)}
-                                    placeholder='End Location'
-                                    type='text'
-                                    name='destination'
-                                />
-                            </div>
+                        {startAnimationOne ? (
+                            <div className='fade-out'>
+                                <div className='route-descriptor'>Please provide your starting and end location to begin your journey!</div>
+                                <div className='input-container'>
+                                    <div className='textfield-container'>
+                                        <input
+                                            className='textfield'
+                                            value={origin}
+                                            onChange={(e) => originChange(e.target.value)}
+                                            placeholder='Start Location'
+                                            type='text'
+                                            name='origin'
+                                        />
+                                        <input
+                                            className='textfield'
+                                            value={destination}
+                                            onChange={(e) => destinationChange(e.target.value)}
+                                            placeholder='End Location'
+                                            type='text'
+                                            name='destination'
+                                        />
+                                    </div>
 
-                            <button
-                                className='input-button'
-                                type='button'
-                                disabled={origin === '' || destination === '' ? true : false}
-                                onClick={() => {
-                                    handleLocation();
-                                }}>
-                                Search
-                            </button>
-                            <img className='leaf leaf2' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
-                            <img className='leaf leaf3' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
-                            <img className='leaf leaf4' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
-                            <img className='leaf leaf5' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
-                            <img className='leaf leaf6' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
-                        </div>
+                                    <button
+                                        className='input-button'
+                                        type='button'
+                                        disabled={origin === '' || destination === '' ? true : false}
+                                        onClick={() => {
+                                            handleLocation();
+                                        }}>
+                                        Search
+                                    </button>
+                                    <img className='leaf leaf2' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
+                                    <img className='leaf leaf3' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
+                                    <img className='leaf leaf4' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
+                                    <img className='leaf leaf5' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
+                                    <img className='leaf leaf6' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
+                                </div>
+                            </div>
+                        ) : (
+                            <>
+                                <div className='route-descriptor'>Please provide your starting and end location to begin your journey!</div>
+                                <div className='input-container'>
+                                    <div className='textfield-container'>
+                                        <input
+                                            className='textfield'
+                                            value={origin}
+                                            onChange={(e) => originChange(e.target.value)}
+                                            placeholder='Start Location'
+                                            type='text'
+                                            name='origin'
+                                        />
+                                        <input
+                                            className='textfield'
+                                            value={destination}
+                                            onChange={(e) => destinationChange(e.target.value)}
+                                            placeholder='End Location'
+                                            type='text'
+                                            name='destination'
+                                        />
+                                    </div>
+
+                                    <button
+                                        className='input-button'
+                                        type='button'
+                                        disabled={origin === '' || destination === '' ? true : false}
+                                        onClick={() => {
+                                            handleLocation();
+                                        }}>
+                                        Search
+                                    </button>
+                                    <img className='leaf leaf2' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
+                                    <img className='leaf leaf3' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
+                                    <img className='leaf leaf4' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
+                                    <img className='leaf leaf5' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
+                                    <img className='leaf leaf6' src='https://cdn3.iconfinder.com/data/icons/spring-23/32/leaf-spring-plant-ecology-green-512.png' alt='leaf' />
+                                </div>
+                            </>
+                        )}
                     </>
                 )}
             </div>
