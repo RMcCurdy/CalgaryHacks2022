@@ -1,5 +1,6 @@
 # EcoMaps
-Group 12 Soup Time submission for CalgaryHacks22
+Group 12 "Soup Time" 
+Tier 1 Submission for CalgaryHacks22
 
 # Our Mission
 EcoMaps wants to give commutors the opportunity to make smart and eco-friendly decisions when it comes to transportation. Providing the data in a simple but relevant way allows commutors and transit users to make more informed decisions about the way they travel. We hope to expand our service to have a greater, greener impact on the daily life of everyone.
