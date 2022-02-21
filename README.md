@@ -9,3 +9,23 @@ EcoMaps uses readily available emissions and fuel consumption data from Natural 
 
 # APIs and Technical Analysis
 EcoMaps uses multiple map and geocode APIs to recieve and calculate location and distance data. The Geocode API is used to get accurate Latitude and Longitude values from entered text strings. This location data can then be passed to the Bing Maps API where we recieve the distance and time values for multiple modes of transportation. Google Maps API is used concurrently to provide the visual map and markers for displaying the origin and destination points.
+
+## Home Page
+<p align="center">
+    <img src="reactapp/src/images/home.png" alt="Logo" width="100%" height="auto">
+</p>
+  
+## Confirmation
+<p align="center">
+    <img src="reactapp/src/images/confirm.png" alt="Logo" width="100%" height="auto">
+</p>
+  
+## Stats
+<p align="center">
+    <img src="reactapp/src/images/stats.png" alt="Logo" width="100%" height="auto">
+</p>
+  
+## Calculate
+<p align="center">
+    <img src="reactapp/src/images/calculate.png" alt="Logo" width="100%" height="auto">
+</p>
